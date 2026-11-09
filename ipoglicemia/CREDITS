@@ -2,7 +2,7 @@ Ipoglicemia: sudato, pallido, confuso — crediti e licenze
 
 Contenuti: dispensa "Ipoglicemia: cosa deve sapere l'OSS" a cura di Riccardo Pilocane (FONTE.md), fornita dall'utente.
 Logo e schermata finale: «Una domanda al giorno… toglie il concorso di torno…», dell'utente (ricostruzione vettoriale in ../logo).
-Voce: Kokoro-82M v1.0 (kokoro-onnx, voce "if_sara"), Apache License 2.0; fonemi italiani corretti con tools/tts_it.py.
+Voce: Piper "it_IT-paola-medium", voce italiana madrelingua (motore Piper; dataset paolapersico1/Voice-Dataset-Italian).
 Font: Alfa Slab One, Oleo Script, Jost, Oxanium, Arimo — SIL Open Font License 1.1.
 Musica ed effetti: originali, sintetizzati in codice. Immagini: disegnate in codice (Canvas 2D).
 Strumenti: motore Mid-century Cartoon e strumenti di render/mix della libreria Lemo-Opuscar (MIT).

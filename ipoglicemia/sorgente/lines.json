@@ -1,116 +1,97 @@
 [
 {
 "id": "L01",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Sudato, pallido, confuso. Potrebbe essere la glicemia."
 },
 {
 "id": "L02",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Oggi, quattordici novembre, è la Giornata mondiale del diabete."
 },
 {
 "id": "L03",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "L'ipoglicemia è un abbassamento della glicemia."
 },
 {
 "id": "L04",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Nella persona con diabete si parla di ipoglicemia sotto i settanta milligrammi per decilitro."
 },
 {
 "id": "L06",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Sudorazione."
 },
 {
 "id": "L07",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Tremori."
 },
 {
 "id": "L08",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Pallore."
 },
 {
 "id": "L09",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Fame improvvisa."
 },
 {
 "id": "L10",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Confusione."
 },
 {
 "id": "L11",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Attenzione: nell'anziano i segnali possono essere sfumati."
 },
 {
 "id": "L12",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Una confusione improvvisa può essere scambiata per demenza o stanchezza."
 },
 {
 "id": "L13",
-"voice": "if_sara",
-"speed": 1.06,
-"text": "Cosa fa l'OSS?"
+"speed": 1.0,
+"text": "Cosa fa l'operatore socio sanitario?"
 },
 {
 "id": "L14",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Non lascia sola la persona."
 },
 {
 "id": "L15",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Avvisa subito l'infermiere."
 },
 {
 "id": "L16",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Riferisce l'orario, i segnali e se ha mangiato."
 },
 {
 "id": "L17",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Cosa dare lo stabiliscono l'infermiere e il protocollo."
 },
 {
 "id": "L18",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "E non dà mai da bere o da mangiare a chi non è cosciente: rischio di soffocamento."
 },
 {
 "id": "L19",
-"voice": "if_sara",
 "speed": 1.0,
 "text": "Prima di pensare alla stanchezza, pensa alla glicemia."
 },
 {
 "id": "L20",
-"voice": "if_sara",
-"speed": 1.06,
+"speed": 1.0,
 "text": "Lo sapevi che la soglia è settanta? Scrivi settanta nei commenti."
 }
 ]

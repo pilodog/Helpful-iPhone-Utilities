@@ -12,13 +12,13 @@ const SANS = (w, px) => `${w} ${px}px Jost`, SLAB = px => `${px}px Slab`;
 // sections in order; each lists its lines. Every line starts after the previous one ends (+gap) and after its section's lead.
 const PLAN = [
   { id: 'hook', lines: ['L01'], lead: .45, min: 4.6, tail: .9 },
-  { id: 'day', lines: ['L02'], lead: .45, tail: .7 },
+  { id: 'day', lines: ['L02'], lead: .45, tail: 1.1 },
   { id: 'what', lines: ['L03', 'L04'], lead: .35, gap: .3, tail: .6 },
   { id: 's0', lines: ['L06'], lead: .2, min: 2.8, tail: 1.0 }, { id: 's1', lines: ['L07'], lead: .15, min: 2.6, tail: .9 }, { id: 's2', lines: ['L08'], lead: .15, min: 2.6, tail: .9 },
   { id: 's3', lines: ['L09'], lead: .15, min: 2.7, tail: .9 }, { id: 's4', lines: ['L10'], lead: .15, min: 2.6, tail: .9 },
   { id: 'warn', lines: ['L11', 'L12'], lead: .35, gap: .3, tail: .6 },
   { id: 'oss', lines: ['L13', 'L14', 'L15', 'L16', 'L17'], lead: .35, gap: .25, tail: 1.9 },
-  { id: 'not', lines: ['L18'], lead: .4, tail: 1.2 },
+  { id: 'not', lines: ['L18'], lead: .4, tail: 1.4 },
   { id: 'key', lines: ['L19'], lead: .55, tail: 2.3, silence: .5 },
   { id: 'cta', lines: ['L20'], lead: .35, tail: 1.6 },
 ];
@@ -37,7 +37,7 @@ export function init(dur) {
 const SUBTEXT = {
   L01: 'Sudato, pallido, confuso. Potrebbe essere la glicemia.', L02: 'Oggi, 14 novembre, è la Giornata mondiale del diabete.', L03: "L'ipoglicemia è un abbassamento della glicemia.",
   L04: 'Nella persona con diabete si parla di ipoglicemia sotto i 70 mg/dl.', L06: 'Sudorazione.', L07: 'Tremori.', L08: 'Pallore.', L09: 'Fame improvvisa.', L10: 'Confusione.',
-  L11: "Attenzione: nell'anziano i segnali possono essere sfumati.", L12: 'Una confusione improvvisa può essere scambiata per demenza o stanchezza.', L13: "Cosa fa l'OSS?", L14: 'Non lascia sola la persona.',
+  L11: "Attenzione: nell'anziano i segnali possono essere sfumati.", L12: 'Una confusione improvvisa può essere scambiata per demenza o stanchezza.', L13: "Cosa fa l'operatore socio sanitario?", L14: 'Non lascia sola la persona.',
   L15: "Avvisa subito l'infermiere.", L16: "Riferisce l'orario, i segnali e se ha mangiato.", L17: "Cosa dare lo stabiliscono l'infermiere e il protocollo.",
   L18: 'E non dà mai da bere o da mangiare a chi non è cosciente: rischio di soffocamento.', L19: 'Prima di pensare alla stanchezza, pensa alla glicemia.', L20: 'Lo sapevi che la soglia è 70? Scrivi 70 nei commenti.',
 };
@@ -190,8 +190,8 @@ const CHECKS = [['Non lascia sola', 'la persona'], ["Avvisa subito", "l'infermie
 function oss(g, t) {
   ground(g, 1520); const [t0] = S('oss');
   const a = seg(t, VO.L13, VO.L13 + .4);
-  bigText(g, ["COSA FA L'OSS"], 540, { px: 96, a });
-  if (a > .5) note('oh', "COSA FA L'OSS", 120, 450, 960, 560);
+  bigText(g, ["COSA FA L'OPERATORE", 'SOCIO SANITARIO'], 500, { px: 72, a });
+  if (a > .5) note('oh', "COSA FA L'OPERATORE SOCIO SANITARIO", 60, 430, 1020, 600);
   const T = [VO.L14, VO.L15, VO.L16];
   CHECKS.forEach(([l1, l2], i) => {
     const y = 730 + i * 200, ap = seg(t, T[i] - .3, T[i]), ck = seg(t, T[i], T[i] + .3); if (ap <= 0) return;
