@@ -6,7 +6,7 @@ LIB=${LIB:-$(cd "$HERE/../.." && pwd)}
 export LIB
 [ -x "$HERE/bin/ffmpeg" ] && export PATH="$HERE/bin:$PATH"
 cd "$LIB"
-[ -s "$HERE/voices/dur.json" ] || "$LIB/.venv/bin/python" core/tts/tts.py "$HERE/lines.json" "$HERE/voices"
+[ -s "$HERE/voices/dur.json" ] || "$LIB/.venv/bin/python" "$HERE/tools/tts_it.py" "$HERE/lines.json" "$HERE/voices"
 node core/render/events.mjs "$HERE" --size 1080x1920
 "$LIB/.venv/bin/python" "$HERE/mix.py"
 node "$HERE/tools/cues.mjs" "$HERE/out/cues.json"

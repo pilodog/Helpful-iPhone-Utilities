@@ -1,24 +1,156 @@
 [
-{"id":"L01","voice":"if_sara","lang":"it","speed":1.0,"text":"Tossisce mentre beve? Non dargli altra acqua."},
-{"id":"L02","voice":"if_sara","lang":"it","speed":1.0,"text":"Un sorso, un colpo di tosse."},
-{"id":"L03","voice":"if_sara","lang":"it","speed":1.0,"text":"Poi la voce diventa gorgogliante."},
-{"id":"L04","voice":"if_sara","lang":"it","speed":1.0,"text":"L'istinto? Un altro bicchiere."},
-{"id":"L05","voice":"if_sara","lang":"it","speed":1.0,"text":"È un errore."},
-{"id":"L06","voice":"if_sara","lang":"it","speed":1.0,"text":"La disfagia è la difficoltà a deglutire."},
-{"id":"L07","voice":"if_sara","lang":"it","speed":1.0,"text":"E i liquidi sottili, come l'acqua, sono spesso i più difficili."},
-{"id":"L08","voice":"if_sara","lang":"it","speed":1.0,"text":"Il rischio è che il liquido vada nelle vie aeree, invece che nell'esofago."},
-{"id":"L09","voice":"if_sara","lang":"it","speed":1.0,"text":"I segnali da osservare."},
-{"id":"L10","voice":"if_sara","lang":"it","speed":1.0,"text":"Tosse."},
-{"id":"L11","voice":"if_sara","lang":"it","speed":1.0,"text":"Voce gorgogliante."},
-{"id":"L12","voice":"if_sara","lang":"it","speed":1.0,"text":"Cibo trattenuto in bocca."},
-{"id":"L13","voice":"if_sara","lang":"it","speed":1.0,"text":"Deglutizioni ripetute."},
-{"id":"L14","voice":"if_sara","lang":"it","speed":1.0,"text":"Cosa fa l'OSS?"},
-{"id":"L15","voice":"if_sara","lang":"it","speed":1.0,"text":"Interrompe."},
-{"id":"L16","voice":"if_sara","lang":"it","speed":1.0,"text":"La tiene seduta, con il busto eretto."},
-{"id":"L17","voice":"if_sara","lang":"it","speed":1.0,"text":"Non la lascia sola."},
-{"id":"L18","voice":"if_sara","lang":"it","speed":1.0,"text":"Avvisa subito l'infermiere."},
-{"id":"L19","voice":"if_sara","lang":"it","speed":1.0,"text":"Consistenze, addensanti e posture li decidono l'équipe e il logopedista."},
-{"id":"L20","voice":"if_sara","lang":"it","speed":1.0,"text":"E sono scritti nel PAI."},
-{"id":"L21","voice":"if_sara","lang":"it","speed":0.95,"text":"Non serve altra acqua: serve fermarsi e chiamare l'infermiere."},
-{"id":"L22","voice":"if_sara","lang":"it","speed":1.0,"text":"Ti è mai capitato in turno? Scrivi ACQUA nei commenti."}
+{
+"id": "L01",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Tossisce mentre beve? Non dargli altra acqua."
+},
+{
+"id": "L02",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Un sorso, un colpo di tosse."
+},
+{
+"id": "L03",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Poi la voce diventa gorgogliante."
+},
+{
+"id": "L04",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "L'istinto? Un altro bicchiere."
+},
+{
+"id": "L05",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "È un errore."
+},
+{
+"id": "L06",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "La disfagia è la difficoltà a deglutire."
+},
+{
+"id": "L07",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "E i liquidi, come l'acqua, sono spesso i più difficili."
+},
+{
+"id": "L08",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Il rischio è che il liquido vada nelle vie aeree, invece che nell'esofago."
+},
+{
+"id": "L09",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "I segnali da osservare."
+},
+{
+"id": "L10",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Tosse."
+},
+{
+"id": "L11",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Voce gorgogliante."
+},
+{
+"id": "L12",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Cibo trattenuto in bocca."
+},
+{
+"id": "L13",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Deglutizioni ripetute."
+},
+{
+"id": "L14",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Cosa fa l'OSS?"
+},
+{
+"id": "L15",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Interrompe."
+},
+{
+"id": "L16",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "La tiene seduta, con il busto eretto."
+},
+{
+"id": "L17",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Non la lascia sola."
+},
+{
+"id": "L18",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Avvisa subito l'infermiere."
+},
+{
+"id": "L19",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Consistenze, addensanti e posture li decidono l'équipe e il logopedista."
+},
+{
+"id": "L20",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "E sono scritti nel PAI."
+},
+{
+"id": "L21",
+"voice": "if_sara",
+"lang": "it",
+"speed": 0.95,
+"text": "Non serve altra acqua: serve fermarsi e chiamare l'infermiere."
+},
+{
+"id": "L22",
+"voice": "if_sara",
+"lang": "it",
+"speed": 1.0,
+"text": "Ti è mai capitato in turno? Scrivi ACQUA nei commenti."
+}
 ]

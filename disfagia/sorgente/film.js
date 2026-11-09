@@ -12,7 +12,7 @@ export const DUR = TL.DUR;
 const CAP = new Set(['L02', 'L03', 'L04', 'L05', 'L06', 'L07', 'L08', 'L09', 'L14', 'L19', 'L20']);
 export const SUBTEXT = {
   L01: 'Tossisce mentre beve? Non dargli altra acqua.', L02: 'Un sorso, un colpo di tosse.', L03: 'Poi la voce diventa gorgogliante.', L04: "L'istinto? Un altro bicchiere.",
-  L05: 'È un errore.', L06: 'La disfagia è la difficoltà a deglutire.', L07: "E i liquidi sottili, come l'acqua, sono spesso i più difficili.",
+  L05: 'È un errore.', L06: 'La disfagia è la difficoltà a deglutire.', L07: "E i liquidi, come l'acqua, sono spesso i più difficili.",
   L08: "Il rischio è che il liquido vada nelle vie aeree, invece che nell'esofago.", L09: 'I segnali da osservare.', L10: 'Tosse.', L11: 'Voce gorgogliante.',
   L12: 'Cibo trattenuto in bocca.', L13: 'Deglutizioni ripetute.', L14: "Cosa fa l'OSS?", L15: 'Interrompe.', L16: 'La tiene seduta, con il busto eretto.', L17: 'Non la lascia sola.',
   L18: "Avvisa subito l'infermiere.", L19: "Consistenze, addensanti e posture li decidono l'équipe e il logopedista.", L20: 'E sono scritti nel PAI.',
@@ -214,8 +214,8 @@ function what(g, t) {
     glass(g, W / 2, 1360, 1.5, { level: .75 });
     if (th > 0) {
       for (let i = 0; i < 5; i++) sparkle(g, W / 2 + Math.cos(i * 1.3) * 230, 1120 + Math.sin(i * 1.9) * 160, 34 * back(clamp(th * 2 - i * .2), 2), { fill: '#FFFFFF', rot: twos(t) });
-      card(g, 250, 860, 580, 110, '#FFFFFF', { r: 55, seed: 230 }); text(g, "liquidi sottili = più difficili", W / 2, 932, { font: SANS(600, 40), align: 'center', alpha: th });
-      if (th > .5) note('thin', 'liquidi sottili = più difficili', 250, 860, 830, 970);
+      card(g, 250, 860, 580, 110, '#FFFFFF', { r: 55, seed: 230 }); text(g, "liquidi = più difficili", W / 2, 932, { font: SANS(600, 40), align: 'center', alpha: th });
+      if (th > .5) note('thin', 'liquidi = più difficili', 250, 860, 830, 970);
     }
   } else {
     // the schematic: head in profile, two tubes; the drop takes the wrong way (red)

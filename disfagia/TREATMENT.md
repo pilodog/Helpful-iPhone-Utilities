@@ -23,7 +23,7 @@ Fondo carta crema; inchiostro bruno scuro. **Azzurro polvere** = l'acqua/il bicc
 |---|---|---|---|
 | 0–4.6 | Gancio: bicchiere in primo piano che si incrina; testo grande in due righe | push lento, crepe che si disegnano | L01 |
 | 4.6–15.0 | L'anziana seduta beve, tossisce (stelle "tosse"), bolle della voce gorgogliante; una mano offre un altro bicchiere; silenzio; X rossa timbrata | figura ferma, si muovono mani e testa; wipe | L02–L05 |
-| 15.0–27.0 | DISFAGIA = difficoltà a deglutire; bicchiere con scintille "liquidi sottili"; schema del profilo con le due vie: esofago e vie aeree, la goccia che sbaglia strada (rosso) | iris dal bicchiere, call-out sul collo | L06–L08 |
+| 15.0–27.0 | DISFAGIA = difficoltà a deglutire; bicchiere con scintille "liquidi"; schema del profilo con le due vie: esofago e vie aeree, la goccia che sbaglia strada (rosso) | iris dal bicchiere, call-out sul collo | L06–L08 |
 | 27.0–41.2 | I segnali: medaglione 1–4, una schermata ciascuno (tosse, voce gorgogliante, cibo trattenuto in bocca, deglutizioni ripetute) | iris attraverso ogni medaglione | L09–L13 |
 | 41.2–52.4 | Cosa fa l'OSS: checklist con 4 spunte turchesi e pittogrammi | wipe dal basso, spunte sul battere | L14–L18 |
 | 52.4–60.2 | Chi decide: cartella ambra; tre icone (consistenze, addensanti, posture) → équipe + logopedista → timbro "PAI" | split / pop-in | L19–L20 |
