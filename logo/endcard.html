@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'Oxanium';src:url('fonts/Oxanium.ttf');font-weight:200 800}
+@font-face{font-family:'Arimo';src:url('fonts/Arimo.ttf');font-weight:400 700}
+html,body{margin:0;overflow:hidden;background:#2A2D30}
+canvas{position:absolute;left:0;top:0}
+#logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+</style></head><body>
+<canvas id="bg"></canvas>
+<!-- the logo, dark-background variant: solid white title with a soft bevel and shadow, light-teal subtitle, raised teal bars -->
+<svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 300">
+  <defs>
+    <linearGradient id="tw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#F4F4F2"/><stop offset="1" stop-color="#D9DADA"/></linearGradient>
+    <linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FD0CA"/><stop offset="1" stop-color="#33AEA9"/></linearGradient>
+    <linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#55BDBB"/><stop offset="1" stop-color="#3C9E9C"/></linearGradient>
+    <linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5AA3A4"/><stop offset="1" stop-color="#438284"/></linearGradient>
+    <filter id="sh" x="-5%" y="-20%" width="115%" height="160%"><feDropShadow dx="5" dy="9" stdDeviation="7" flood-color="#000000" flood-opacity=".55"/></filter>
+  </defs>
+  <g filter="url(#sh)">
+    <text id="title" x="1372" y="150" text-anchor="end" font-family="Oxanium" font-weight="600" font-size="132" letter-spacing="1" textLength="1330" lengthAdjust="spacingAndGlyphs" fill="#8E9092">UNA DOMANDA AL GIORNO...</text>
+    <text x="1369" y="146" text-anchor="end" font-family="Oxanium" font-weight="600" font-size="132" letter-spacing="1" textLength="1330" lengthAdjust="spacingAndGlyphs" fill="url(#tw)" class="tt">UNA DOMANDA AL GIORNO...</text>
+    <!-- bars: a darker side face for depth, then the front -->
+    <rect x="1407" y="24" width="78" height="264" rx="10" fill="#1F5F5D"/><rect x="1400" y="16" width="78" height="264" rx="10" fill="url(#b1)"/><rect x="1404" y="20" width="70" height="9" rx="4.5" fill="#FFFFFF" opacity="0.25"/>
+    <rect x="1497" y="24" width="78" height="264" rx="10" fill="#22585A"/><rect x="1490" y="16" width="78" height="264" rx="10" fill="url(#b2)"/><rect x="1494" y="20" width="70" height="9" rx="4.5" fill="#FFFFFF" opacity="0.2"/>
+    <rect x="1587" y="24" width="78" height="264" rx="10" fill="#25494B"/><rect x="1580" y="16" width="78" height="264" rx="10" fill="url(#b3)"/><rect x="1584" y="20" width="70" height="9" rx="4.5" fill="#FFFFFF" opacity="0.15"/>
+    <rect x="1414" y="20" width="104" height="10" rx="5" fill="#FFFFFF" opacity=".25"/><rect x="1544" y="20" width="104" height="10" rx="5" fill="#FFFFFF" opacity=".2"/><rect x="1674" y="20" width="104" height="10" rx="5" fill="#FFFFFF" opacity=".15"/>
+  </g>
+  <text x="1366" y="236" text-anchor="end" font-family="Arimo" font-weight="400" font-size="58" fill="#4FB5AE">toglie il concorso di torno...</text>
+</svg>
+<script>
+const W = innerWidth, H = innerHeight, cv = document.getElementById('bg'); cv.width = W; cv.height = H; const g = cv.getContext('2d');
+// dark slate wall: lighter at the top centre, a vignette at the edges, fine seeded grain
+const r = g.createRadialGradient(W * .5, H * .12, 0, W * .5, H * .4, Math.max(W, H) * .85);
+r.addColorStop(0, '#4A4E51'); r.addColorStop(.45, '#33373A'); r.addColorStop(1, '#212426'); g.fillStyle = r; g.fillRect(0, 0, W, H);
+let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+const im = g.getImageData(0, 0, W, H), d = im.data; for (let i = 0; i < d.length; i += 4) { const n = (rnd() - .5) * 9; d[i] += n; d[i + 1] += n; d[i + 2] += n; } g.putImageData(im, 0, 0);
+const L = document.getElementById('logo'), lw = Math.round(W * (W > H ? .6 : .83)); L.setAttribute('width', lw); L.setAttribute('height', Math.round(lw * 300 / 1680));
+document.fonts.ready.then(async () => { await document.fonts.load('600 132px Oxanium'); await document.fonts.load('400 58px Arimo'); window.READY = true; });
+</script></body></html>

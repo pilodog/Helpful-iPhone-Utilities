@@ -4,7 +4,7 @@
 @font-face{font-family:'Arimo';src:url('fonts/Arimo.ttf');font-weight:400 700}
 html,body{margin:0;background:transparent}
 </style></head><body>
-<svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 300" width="1800" height="300">
+<svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 300" width="1680" height="300">
   <defs>
     <linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FCBC6"/><stop offset="1" stop-color="#36ADA9"/></linearGradient>
     <linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#55B6B4"/><stop offset="1" stop-color="#3F9C9B"/></linearGradient>
@@ -12,13 +12,13 @@ html,body{margin:0;background:transparent}
     <filter id="sh" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#1E3436" flood-opacity=".28"/></filter>
   </defs>
   <!-- title: white letters with a grey outline (as in the original), slightly darker so it reads on light backgrounds -->
-  <text id="title" x="1372" y="150" text-anchor="end" font-family="Oxanium" font-weight="400" font-size="132" letter-spacing="2"
+  <text id="title" x="1372" y="150" text-anchor="end" font-family="Oxanium" font-weight="400" font-size="132" letter-spacing="2" textLength="1330" lengthAdjust="spacingAndGlyphs"
         fill="#FFFFFF" stroke="#8E9399" stroke-width="5" paint-order="stroke" stroke-linejoin="round">UNA DOMANDA AL GIORNO...</text>
   <text id="sub" x="1372" y="232" text-anchor="end" font-family="Arimo" font-weight="700" font-size="54" fill="#1E5A5A">toglie il concorso di torno...</text>
   <g filter="url(#sh)">
-    <rect x="1410" y="18" width="112" height="264" rx="14" fill="url(#b1)" stroke="#FFFFFF" stroke-width="5"/>
-    <rect x="1540" y="18" width="112" height="264" rx="14" fill="url(#b2)" stroke="#FFFFFF" stroke-width="5"/>
-    <rect x="1670" y="18" width="112" height="264" rx="14" fill="url(#b3)" stroke="#FFFFFF" stroke-width="5"/>
+    <rect x="1400" y="16" width="78" height="264" rx="10" fill="url(#b1)" stroke="#FFFFFF" stroke-width="4"/>
+    <rect x="1490" y="16" width="78" height="264" rx="10" fill="url(#b2)" stroke="#FFFFFF" stroke-width="4"/>
+    <rect x="1580" y="16" width="78" height="264" rx="10" fill="url(#b3)" stroke="#FFFFFF" stroke-width="4"/>
   </g>
 </svg>
 <script>
@@ -26,7 +26,7 @@ document.fonts.ready.then(async () => {
   await document.fonts.load('400 132px Oxanium'); await document.fonts.load('700 62px Arimo');
   // fit the title to the space left of the bars
   const t = document.getElementById('title'), w = t.getComputedTextLength(), s = document.getElementById('sub');
-  if (w > 1360) t.setAttribute('textLength', 1360), t.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+  
   window.READY = true;
 });
 </script></body></html>
