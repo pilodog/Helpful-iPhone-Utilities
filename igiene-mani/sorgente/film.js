@@ -46,6 +46,24 @@ const SUBTEXT = {
 };
 export const subtitleCues = () => SUBS.map(s => ({ t0: s.t0, t1: s.t1, text: SUBTEXT[s.id] }));
 
+// ---------- frame + layout (horizontal 1920×1080 or vertical 1080×1920) ----------
+let W = 1920, H = 1080, V = false;
+const LYH = { tx: 96, ty: 120, readyIn: [980, 470, 360], inset: [1240, 450, 360], timerR: [300, 470, 110], timerW: [300, 520, 110], when: [96, 210],
+  counter: [1390, 420], wrow: [96, 800, 186, 21], legend: [96, 150], subMax: 1380, subFont: 40, subBottom: 56 };
+const LYV = { tx: 64, ty: 170, readyIn: [540, 1210, 400], inset: [540, 1170, 380], timerR: [880, 300, 100], timerW: [880, 300, 100], when: [64, 260],
+  counter: [120, 1380], wrow: [40, 1615, 172, 17], legend: [64, 170], subMax: 900, subFont: 40, subBottom: 130 };
+let LY = LYH;
+// camera adapter: in the vertical frame the world is drawn smaller (KS) and moved up or down (DY px) per section
+const KSV = { hook: .72, num: .9, ready: .62, mom: .56, rub: .6, wash: .72, fin: .62 }, DYV = { hook: 0, num: -200, ready: -450, mom: 0, rub: -450, wash: -470, fin: 0 };
+function cam(t, keys, s) {
+  const c = camAt(t, keys); if (!V) return c;
+  let ks = KSV[s]; if (s === 'fin') ks = lerp(.62, .9, clamp((46 - c.k) / (46 - 9.5)));
+  c.k *= ks; let dy = DYV[s]; if (s === 'fin') dy = lerp(0, 300, clamp((46 - c.k / ks) / (46 - 9.5)));
+  if (s === 'num') { c.x = 0; c.y = 0; }
+  if (s === 'mom') { const dx = clamp((c.k - 24) / 14) * 300 * (1 - seg(t, 52.6, 53.6)), d = dx / (2 * .866 * c.k); c.x += d; c.y -= d; }   // keep the right-hand pins in frame in close shots
+  c.z += dy / c.k; return c;
+}
+
 // ---------- helpers ----------
 const sect = t => t < TL.NUM0 ? 'hook' : t < TL.READY0 ? 'num' : t < TL.ROOM0 ? 'ready' : t < TL.RUB0 ? 'mom' : t < TL.WASH0 ? 'rub' : t < TL.FIN0 ? 'wash' : 'fin';
 const steps12 = t => Math.floor(t * 12) / 12;
@@ -179,9 +197,9 @@ const RUBS = [[TL.M1, TL.M1 + 1.8], [TL.M2, TL.M2 + 1.6], [48.8, 50.4], [TL.M4 +
 const MOMENTS = [
   { t: TL.M1, n: '1', title: 'PRIMA DEL CONTATTO', sub: 'col paziente', at: [10.2, 13.6, 4.2], dir: 1, up: 120 },
   { t: TL.M2, n: '2', title: 'PRIMA DI UNA MANOVRA', sub: 'pulita o asettica', at: [1.75, 14.2, 2.8], dir: 1, up: 105 },
-  { t: TL.M3, n: '3', title: 'DOPO I LIQUIDI', sub: 'biologici (rischio)', at: [5.3, 15.9, 1.0], dir: -1, up: 60 },
+  { t: TL.M3, n: '3', title: 'DOPO I LIQUIDI', sub: 'biologici (rischio)', at: [5.3, 15.9, 1.0], dir: -1, up: 60, upV: 25 },
   { t: TL.M4, n: '4', title: 'DOPO IL CONTATTO', sub: 'col paziente', at: [11.4, 17.7, 3.8], dir: 1, up: 70 },
-  { t: TL.M5, n: '5', title: "DOPO L'AMBIENTE", sub: 'attorno al paziente', at: [1.7, 17.0, 2.4], dir: -1, up: 30 },
+  { t: TL.M5, n: '5', title: "DOPO L'AMBIENTE", sub: 'attorno al paziente', at: [1.7, 17.0, 2.4], dir: -1, up: 30, upV: 100 },
 ];
 
 // ---------- cameras ----------
@@ -196,12 +214,14 @@ const CAM_RUB = [{ t: TL.RUB0, x: 6.2, y: 16.0, z: 1, k: 49 }, { t: TL.RUB0 + 1.
 const CAM_WASH = [{ t: TL.WASH0, x: 0, y: 0, z: 1.5, k: 50 }, { t: TL.WASH_END, x: 0, y: 0, z: 1.5, k: 56 }];
 const CAM_FIN = [{ t: TL.FIN0, x: 8, y: 9, z: 1, k: 46 }, { t: TL.PULL0, x: 6, y: 10, z: 1, k: 50 }, { t: TL.PULL1, x: 13, y: 45, z: 0, k: 9.8, e: t => 1 - Math.pow(1 - t, 3) }, { t: TL.END, x: 12.5, y: 45.5, z: 0, k: 9.5 }];
 
+const CAM_FIN_V = CAM_FIN.map((c, i) => i >= 2 ? { ...c, x: 35, y: 23 } : c);
+
 // ---------- render ----------
 export function render(g, t, Q) {
-  TXT = [];
-  g.fillStyle = BG; g.fillRect(0, 0, 1920, 1080);
+  TXT = []; W = g.canvas.width; H = g.canvas.height; V = H > W; LY = V ? LYV : LYH;
+  g.fillStyle = BG; g.fillRect(0, 0, W, H);
   dots(g);
-  const iso = new Iso(g);
+  const iso = new Iso(g, W, H);
   const s = sect(t);
   if (s === 'hook') hook(g, iso, t);
   else if (s === 'num') numberBoard(g, iso, t);
@@ -213,11 +233,11 @@ export function render(g, t, Q) {
   subtitle(g, t);
 }
 export function texts(g, t, Q) { render(g, t, Q); return TXT; }
-function dots(g) { g.fillStyle = 'rgba(42,39,51,.07)'; for (let y = 0; y < 1080; y += 36) for (let x = (y / 36) % 2 ? 31 : 0; x < 1920; x += 62) g.fillRect(x, y, 2, 2); }
+function dots(g) { g.fillStyle = 'rgba(42,39,51,.07)'; for (let y = 0; y < H; y += 36) for (let x = (y / 36) % 2 ? 31 : 0; x < W; x += 62) g.fillRect(x, y, 2, 2); }
 
 // 1 — the hook: germs travel on the hands from bed A to bed B
 function hook(g, iso, t) {
-  iso.cam = camAt(t, CAM_HOOK);
+  iso.cam = cam(t, CAM_HOOK, 'hook');
   const desat = ss(seg(t, TL.PUSH0 + .6, TL.PUSH1)) * .9; iso.desat = desat;
   const out = TL.HOOK_END - .05;
   const [x, y, mv] = path(t, HOOK_PATH);
@@ -241,12 +261,12 @@ function hook(g, iso, t) {
   const k = iso.cam.k, gr = clamp(k / 160) * 10 + 5;
   if (t > TL.TOUCH_A) for (let i = 0; i < 4; i++) { const a = clamp((t - TL.TOUCH_A - i * .12) * 4) * (1 - clamp((t - TL.TOUCH_B - .3) * 1.5) * .5); germ(g, hx + Math.cos(i * 1.7) * gr * 1.4, hy + Math.sin(i * 1.7) * gr * 1.1, gr * .55 * back(clamp(a), 2.2)); }
   ring(g, hx, hy, 18 + k * .35, clamp((t - TL.PUSH0) * 2), t, t > TL.PUSH1 - .6 ? 'LE MANI' : null, { color: INK, ts: 30 });
-  title(g, 'IGIENE DELLE MANI', 96, 120, seg(t, 1.2, 2.4) * (1 - seg(t, 7.2, 7.8)), { sub: 'per operatori socio-sanitari' });
+  title(g, 'IGIENE DELLE MANI', LY.tx, LY.ty, seg(t, 1.2, 2.4) * (1 - seg(t, 7.2, 7.8)), { sub: 'per operatori socio-sanitari' });
 }
 
 // 2 — the number: 100 avoidable infections, up to 50 prevented
 function numberBoard(g, iso, t) {
-  iso.cam = camAt(t, CAM_NUM);
+  iso.cam = cam(t, CAM_NUM, 'num');
   const z = boardZ(t, TL.NUM0, TL.READY0 - .01 + 10);
   iso.box(-7, -7, z - 1.2, 14, 14, 1.2, T.plinth, { cull: false, layer: -2 });
   iso.box(-7, -7, z - 2.0, 14, 14, .8, T.slab1, { cull: false, layer: -2 });
@@ -265,7 +285,7 @@ function numberBoard(g, iso, t) {
   // the counter, big, to the right
   const a2 = seg(t, TL.ICON0, TL.ICON0 + .5);
   if (a2 > 0) {
-    g.save(); g.globalAlpha = a2; const x = 1390, y = 420;
+    g.save(); g.globalAlpha = a2; const [x, y] = LY.counter;
     haloText(g, 'FINO AL', x, y - 96, { font: '600 30px Jost', track: 5 });
     haloText(g, `${n}`, x, y + 40, { font: '400 170px Jost', color: TEAL });
     g.font = '400 170px Jost'; const w = g.measureText(`${n}`).width;
@@ -280,7 +300,7 @@ function numberBoard(g, iso, t) {
 
 // 3 — hands ready: rules as objects that leave the hand
 function ready(g, iso, t) {
-  iso.cam = camAt(t, CAM_READY);
+  iso.cam = cam(t, CAM_READY, 'ready');
   const z = boardZ(t, TL.READY0 + .1, null);
   iso.desat = .85;
   room(iso, t, { germA: () => 0, germB: () => 0 }, { z });
@@ -288,8 +308,8 @@ function ready(g, iso, t) {
   iso.flush(); iso.desat = 0;
   const [hx, hy] = handScreen(iso, H);
   const a = seg(t, TL.READY0 + .8, TL.READY0 + 1.8);
-  inset(iso, hx, hy, 980, 470, 360, a, (g2, cx, cy, R) => readyInset(g2, cx, cy, R, t));
-  title(g, 'MANI PRONTE', 96, 120, seg(t, TL.READY0 + 1.2, TL.READY0 + 2.2));
+  inset(iso, hx, hy, ...LY.readyIn, a, (g2, cx, cy, R) => readyInset(g2, cx, cy, R, t));
+  title(g, 'MANI PRONTE', LY.tx, LY.ty, seg(t, TL.READY0 + 1.2, TL.READY0 + 2.2));
 }
 function readyInset(g, cx, cy, R, t) {
   g.fillStyle = '#F4F5F7'; g.fillRect(cx - R, cy - R, 2 * R, 2 * R);
@@ -346,7 +366,7 @@ function momentsState(t) {
   return { x, y, mv, arm, face, rubbing };
 }
 function moments(g, iso, t) {
-  iso.cam = camAt(t, CAM_MOM);
+  iso.cam = cam(t, CAM_MOM, 'mom');
   const S = momentsState(t);
   room(iso, t, { lit: (tt, w) => 0, cup: tt => ss(seg(tt, 56.6, 57.1)) });
   // patient zone plate (decal) + dashed boundary
@@ -357,25 +377,25 @@ function moments(g, iso, t) {
   const zl = seg(t, TL.ZONE0, TL.ZONE0 + 1.6);
   if (zl > 0) { const pts = [...ZONE, ZONE[0]].map(p => iso.P(p[0], p[1], .02)); cutLine(g, pts, zl, { color: '#6E5FB0', lw: 3, dash: [14, 9] }); }
   const zp = seg(t, TL.ZONE0 + 1.0, TL.ZONE0 + 2.4);
-  if (zp > 0) { const [px, py] = iso.P(0.6, 19.4, 0); g.save(); g.globalAlpha = zp; haloText(g, 'ZONA PAZIENTE', px - 40, py + 44, { font: '600 26px Jost', track: 4, color: '#5A4C9C' }); g.restore(); if (zp > .5) note('zone', 'ZONA PAZIENTE', px - 40, py + 20, px + 200, py + 50); }
+  if (zp > 0) { const [px, py] = iso.P(V ? 4.2 : 0.6, 19.4, 0); g.save(); g.globalAlpha = zp; haloText(g, 'ZONA PAZIENTE', px - 40, py + 44, { font: '600 26px Jost', track: 4, color: '#5A4C9C' }); g.restore(); if (zp > .5) note('zone', 'ZONA PAZIENTE', px - 40, py + 20, px + 200, py + 50); }
   const [hx, hy] = handScreen(iso, H);
   const ri = RUBS.findIndex(([a, b]) => t >= a - .1 && t <= b + .3);
   if (ri >= 0) { const [a, b] = RUBS[ri]; rubRing(g, hx, hy, t, seg(t, a - .1, a + .2) * (1 - seg(t, b, b + .3)), 22 + iso.cam.k * .3); }
   // germs on the hand after touching (moment 3, 4, 5 stories), cleaned by the next rub
   // pins accumulate: the room becomes the infographic
   MOMENTS.forEach((m, i) => {
-    const a = seg(t, m.t, m.t + 1.2);
+    const a = seg(t, m.t, m.t + .9);
     if (a <= 0) return;
     const P = m.at;
     pinN(g, iso, P, m, a, `m${i}`);
   });
-  title(g, 'I 5 MOMENTI', 96, 120, seg(t, TL.ZONE0, TL.ZONE0 + 1));
+  title(g, 'I 5 MOMENTI', LY.tx, LY.ty, seg(t, TL.ZONE0, TL.ZONE0 + 1));
   if (t > TL.M2 + 1.6 && t < 45.6) { const [sx, sy] = iso.P(1.75, 14.2, 2.4); swab(g, sx, sy - 10, iso.cam.k * .02, seg(t, TL.M2 + 1.6, TL.M2 + 2)); }
   if (t > 46.6 && t < 48.8) { const [sx, sy] = iso.P(5.6, 16.1, 0.1); for (let i = 0; i < 4; i++) { const u = ((t * 2 + i / 4) % 1); drop(g, sx + 30, sy - 30 + u * 40, 6, '#D9C77A', 1 - u); } }
 }
 function swab(g, x, y, s, a) { if (a <= 0) return; g.save(); g.globalAlpha = a; g.strokeStyle = '#7E8897'; g.lineWidth = 5; g.lineCap = 'round'; g.beginPath(); g.moveTo(x + 40, y + 30); g.lineTo(x + 6, y + 4); g.stroke(); g.beginPath(); g.arc(x + 4, y + 2, 8, 0, TAU); g.fillStyle = '#F6F3EE'; g.fill(); g.restore(); }
 function pinN(g, iso, P, m, a, id) { // numbered moment pin: mustard number chip + title + sub
-  const [ax, ay] = iso.P(P[0], P[1], P[2]); const up = m.up, dir = m.dir, len = 70;
+  const [ax, ay] = iso.P(P[0], P[1], P[2]); const up = V ? (m.upV ?? m.up) : m.up, dir = m.dir, len = V ? 34 : 70, tf = V ? 22 : 25, sf = V ? 20 : 24;
   const s1 = eo(seg(a, 0, .2)), s2 = eo(seg(a, .12, .45)), s3 = eo(seg(a, .38, .58)), s4 = seg(a, .5, 1);
   g.save(); g.strokeStyle = INK; g.lineWidth = 2.2; g.lineCap = 'round';
   if (s2 > 0) { g.beginPath(); g.moveTo(ax, ay); g.lineTo(ax, ay - up * s2); if (s3 > 0) g.lineTo(ax + dir * len * s3, ay - up); g.stroke(); }
@@ -386,8 +406,8 @@ function pinN(g, iso, P, m, a, id) { // numbered moment pin: mustard number chip
     if (cr > 10) haloText(g, m.n, tx, ty + 11, { font: '600 32px Jost', align: 'center', halo: false, color: INK });
     g.save(); g.beginPath(); const wv = 520 * ss(seg(a, .6, 1)); if (dir > 0) g.rect(tx + 30, ty - 40, wv, 100); else g.rect(tx - 30 - wv, ty - 40, wv, 100); g.clip();
     const al = dir > 0 ? 'left' : 'right', x = tx + dir * 36;
-    haloText(g, m.title, x, ty - 2, { font: '600 25px Jost', track: 3, align: al });
-    haloText(g, m.sub, x, ty + 28, { font: '400 24px Jost', track: 1, align: al });
+    haloText(g, m.title, x, ty - 2, { font: `600 ${tf}px Jost`, track: V ? 2 : 3, align: al });
+    haloText(g, m.sub, x, ty + 26, { font: `400 ${sf}px Jost`, track: 1, align: al });
     g.restore();
     if (a > .7) { g.font = '600 25px Jost'; const w = g.measureText(m.title).width + 40; note(id, m.n + ' ' + m.title + ' ' + m.sub, dir > 0 ? tx - 24 : tx - 36 - w, ty - 28, dir > 0 ? tx + 36 + w : tx + 24, ty + 36); }
   }
@@ -396,7 +416,7 @@ function pinN(g, iso, P, m, a, id) { // numbered moment pin: mustard number chip
 
 // 5 — the alcohol rub: inset with the six motions and a 20–30 s timer
 function rub(g, iso, t) {
-  iso.cam = camAt(t, CAM_RUB);
+  iso.cam = cam(t, CAM_RUB, 'rub');
   iso.desat = ss(seg(t, TL.RUB0, TL.RUB0 + 1.2)) * .85;
   room(iso, t, {});
   iso.flat(ZONE, .01, '#D6CFEE', { a: 1, depth: -950 });
@@ -404,10 +424,10 @@ function rub(g, iso, t) {
   iso.flush(); iso.desat = 0;
   const [hx, hy] = handScreen(iso, H);
   rubRing(g, hx, hy, t, seg(t, TL.RUB0, TL.RUB0 + .4), 40);
-  const a = seg(t, TL.RUB0 + .6, TL.RUB0 + 1.6), cx = 1240, cy = 450, R = 360;
+  const a = seg(t, TL.RUB0 + .6, TL.RUB0 + 1.6), [cx, cy, R] = LY.inset;
   inset(iso, hx, hy, cx, cy, R, a, (g2, x, y, r) => rubInset(g2, x, y, r, t));
-  title(g, 'FRIZIONE IDROALCOLICA', 96, 120, seg(t, TL.RUB0 + .8, TL.RUB0 + 1.8), { sub: '' });
-  timer(g, 300, 470, 110, t, TL.GEL, TL.RUB_END, '20–30', 's', TEAL, seg(t, TL.GEL - .4, TL.GEL));
+  title(g, 'FRIZIONE IDROALCOLICA', LY.tx, LY.ty, seg(t, TL.RUB0 + .8, TL.RUB0 + 1.8), { sub: '' });
+  timer(g, ...LY.timerR, t, TL.GEL, TL.RUB_END, '20–30', 's', TEAL, seg(t, TL.GEL - .4, TL.GEL));
 }
 function rubInset(g, cx, cy, R, t) {
   g.fillStyle = '#F4F5F7'; g.fillRect(cx - R, cy - R, 2 * R, 2 * R);
@@ -468,7 +488,7 @@ function sink(iso, t, z) {
   iso.cyl(-5.8, 4.6, z, .7, 1.8, T.steel);
 }
 function wash(g, iso, t) {
-  iso.cam = camAt(t, CAM_WASH);
+  iso.cam = cam(t, CAM_WASH, 'wash');
   const z = boardZ(t, TL.WASH0, TL.WASH_END - .01 + 10);
   sink(iso, t, z);
   const water = seg(t, TL.TAP_ON, TL.TAP_ON + .2) * (1 - seg(t, TL.TAP_OFF, TL.TAP_OFF + .2));
@@ -476,31 +496,31 @@ function wash(g, iso, t) {
   iso.flush();
   if (water > 0) { const [sx, sy] = iso.P(-5.5, 0, z + 3.95), [ex, ey] = iso.P(-5.5, 0, z + 2.85); g.save(); g.strokeStyle = tri(WATER)[0]; g.lineWidth = iso.cam.k * .16 * water; g.lineCap = 'round'; g.beginPath(); g.moveTo(sx, sy); g.lineTo(ex, ey); g.stroke(); g.restore(); }
   const [hx, hy] = handScreen(iso, H);
-  const a = seg(t, TL.WASH0 + .9, TL.WASH0 + 1.9), cx = 1240, cy = 450, R = 360;
+  const a = seg(t, TL.WASH0 + .9, TL.WASH0 + 1.9), [cx, cy, R] = LY.inset;
   inset(iso, hx, hy, cx, cy, R, a, (g2, x, y, r) => washInset(g2, x, y, r, t, water));
-  title(g, 'ACQUA E SAPONE', 96, 120, seg(t, TL.WASH0 + .8, TL.WASH0 + 1.8), { chip: WATER });
+  title(g, 'ACQUA E SAPONE', LY.tx, LY.ty, seg(t, TL.WASH0 + .8, TL.WASH0 + 1.8), { chip: WATER });
   // when: two chips
   const wa = seg(t, VO.L14 + .6, VO.L14 + 1.4);
-  if (wa > 0) { g.save(); g.globalAlpha = wa * (1 - seg(t, VO.L15, VO.L15 + .4)); haloText(g, 'MANI VISIBILMENTE SPORCHE', 96, 210, { font: '600 25px Jost', track: 3 }); haloText(g, 'DOPO IL BAGNO', 96, 250, { font: '600 25px Jost', track: 3 }); g.restore(); if (wa > .5 && t < VO.L15) note('when', 'MANI VISIBILMENTE SPORCHE DOPO IL BAGNO', 96, 185, 540, 260); }
-  timer(g, 300, 520, 110, t, TL.TAP_ON, TL.TAP_OFF, '40–60', 's', WATER, seg(t, TL.TAP_ON - .4, TL.TAP_ON));
+  if (wa > 0) { g.save(); g.globalAlpha = wa * (1 - seg(t, VO.L15, VO.L15 + .4)); haloText(g, 'MANI VISIBILMENTE SPORCHE', LY.when[0], LY.when[1], { font: '600 25px Jost', track: 3 }); haloText(g, 'DOPO IL BAGNO', LY.when[0], LY.when[1] + 40, { font: '600 25px Jost', track: 3 }); g.restore(); if (wa > .5 && t < VO.L15) note('when', 'MANI VISIBILMENTE SPORCHE DOPO IL BAGNO', LY.when[0], LY.when[1] - 25, LY.when[0] + 450, LY.when[1] + 50); }
+  timer(g, ...LY.timerW, t, TL.TAP_ON, TL.TAP_OFF, '40–60', 's', WATER, seg(t, TL.TAP_ON - .4, TL.TAP_ON));
   washSteps(g, t);
 }
 const WASH_STEPS = ['BAGNA', 'SAPONE', 'STROFINA', 'RISCIACQUA', 'ASCIUGA', 'CHIUDI'];
 const WASH_T = [TL.TAP_ON, TL.SOAP, TL.SOAP + .6, TL.RINSE, TL.DRY, TL.TAP_OFF];
 function washSteps(g, t) { // a numbered row at the bottom-left (above the subtitle zone)
-  const x0 = 96, y = 800;
+  const [x0, y, step, fs] = LY.wrow;
   WASH_STEPS.forEach((s, i) => {
     const a = seg(t, WASH_T[i], WASH_T[i] + .4); const on = a > 0, cur = on && (i === 5 || t < WASH_T[i + 1]);
-    const x = x0 + i * 186;
+    const x = x0 + i * step;
     g.save(); g.globalAlpha = on ? 1 : .35;
     const T3 = tri(on ? WATER : '#C9CFD7'); const r = 16 * (cur ? 1 + .15 * back(a, 2) - .15 : 1);
     g.beginPath(); g.arc(x + 16, y, r, 0, TAU); g.fillStyle = T3[1]; g.fill();
     haloText(g, `${i + 1}`, x + 16, y + 7, { font: '600 20px Jost', align: 'center', halo: false, color: '#FFFFFF' });
-    haloText(g, s, x + 40, y + 8, { font: `${cur ? 600 : 500} 21px Jost`, track: 2 });
-    if (i < 5) { g.strokeStyle = INK; g.lineWidth = 1.5; g.setLineDash([3, 5]); g.beginPath(); g.moveTo(x + 150, y); g.lineTo(x + 176, y); g.stroke(); }
+    haloText(g, s, x + 38, y + 7, { font: `${cur ? 600 : 500} ${fs}px Jost`, track: 1.5 });
+    if (i < 5) { g.strokeStyle = INK; g.lineWidth = 1.5; g.setLineDash([3, 5]); g.beginPath(); g.moveTo(x + step - 34, y); g.lineTo(x + step - 8, y); g.stroke(); }
     g.restore();
   });
-  if (t > TL.TAP_ON + .4) note('wsteps', WASH_STEPS.join(' '), x0, y - 20, x0 + 6 * 186, y + 20, true);
+  if (t > TL.TAP_ON + .4) note('wsteps', WASH_STEPS.join(' '), x0, y - 20, x0 + 6 * step, y + 20, true);
 }
 function washInset(g, cx, cy, R, t, water) {
   g.fillStyle = '#F2F6FA'; g.fillRect(cx - R, cy - R, 2 * R, 2 * R);
@@ -530,7 +550,7 @@ function washInset(g, cx, cy, R, t, water) {
 
 // 7 — finale: the same walk, cut at the dispenser; pull out over the ward; the legend
 function finale(g, iso, t) {
-  iso.cam = camAt(t, CAM_FIN);
+  iso.cam = cam(t, V ? CAM_FIN_V : CAM_FIN, 'fin');
   const z = boardZ(t, TL.FIN0, null);
   const [x, y, mv] = path(t, FIN_PATH);
   const lit = (tt, w) => w === 'wall' ? seg(tt, TL.FIN_GEL, TL.FIN_GEL + .3) : 0;
@@ -555,7 +575,7 @@ function finale(g, iso, t) {
 }
 function legend(g, t) {
   const a = seg(t, TL.CARD, TL.CARD + 1.2); if (a <= 0) return;
-  const x = 96, y = 150;
+  const [x, y] = LY.legend;
   title(g, 'MANI PULITE, CURA SICURA', x, y, a, { size: 40 });
   const items = ['Prima del contatto col paziente', 'Prima di una manovra pulita o asettica', 'Dopo il rischio di esposizione a liquidi biologici', 'Dopo il contatto col paziente', "Dopo il contatto con l'ambiente attorno al paziente"];
   items.forEach((s, i) => {
@@ -582,9 +602,9 @@ function wrap(g, s, max) {
   if (g.measureText(s).width > max) { const w = s.split(' '); let best = null; for (let i = 1; i < w.length; i++) { const a = w.slice(0, i).join(' '), b = w.slice(i).join(' '); const m = Math.max(g.measureText(a).width, g.measureText(b).width); if (m <= max && (!best || m < best[0])) best = [m, a, b]; } if (best) return [best[1], best[2]]; } const w = s.split(' '); const L = []; let cur = ''; for (const x of w) { const n = cur ? cur + ' ' + x : x; if (g.measureText(n).width > max && cur) { L.push(cur); cur = x; } else cur = n; } if (cur) L.push(cur); return L; }
 function subtitle(g, t) {
   const S = SUBS.find(s => t >= s.t0 && t < s.t1); if (!S) return;
-  const txt = SUBTEXT[S.id]; g.save(); g.font = '500 40px Jost';
-  const L = wrap(g, txt, 1380), lh = 52, w = Math.max(...L.map(l => g.measureText(l).width)) + 110, h = L.length * lh + 34;
-  const x = 960 - w / 2, y = 1080 - 56 - h;
+  const txt = SUBTEXT[S.id]; g.save(); g.font = `500 ${LY.subFont}px Jost`;
+  const L = wrap(g, txt, LY.subMax), lh = 52, w = Math.max(...L.map(l => g.measureText(l).width)) + 110, h = L.length * lh + 34;
+  const x = W / 2 - w / 2, y = H - LY.subBottom - h;
   const ain = seg(t, S.t0, S.t0 + .2), aout = seg(t, S.t1 - .25, S.t1), dy = aout * 8;
   g.globalAlpha = 1 - aout; g.translate(0, dy);
   plate(g, x, y, w, h, 10); g.fillStyle = PAL.paper; g.fill();

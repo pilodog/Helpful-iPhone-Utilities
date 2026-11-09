@@ -1,5 +1,5 @@
 const Q = new URLSearchParams(location.search);
-const cv = document.getElementById('c'), g = cv.getContext('2d');
+const cv = document.getElementById('c'); cv.width = innerWidth; cv.height = innerHeight; const g = cv.getContext('2d');
 for (const w of [400, 500, 600, 700]) await document.fonts.load(`${w} 40px Jost`);
 const dur = await (await fetch('voices/dur.json')).json();
 const film = await import('./film.js');

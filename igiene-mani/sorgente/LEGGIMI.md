@@ -12,3 +12,10 @@ sh films/igiene-mani/build.sh      # voce → eventi → mix → sottotitoli →
 ```
 
 Il font Jost viene scaricato automaticamente da `build.sh`. Serve ffmpeg 7+.
+
+Versione verticale 1080×1920 (stesso audio, stessi sottotitoli):
+
+```sh
+node core/render/video.mjs films/igiene-mani --fps 24 --size 1080x1920 --out films/igiene-mani/out/video_v.mp4
+sh core/render/mux.sh films/igiene-mani/out/video_v.mp4 films/igiene-mani/out/mix.wav films/igiene-mani/igiene-mani-verticale.mp4 24 0
+```
