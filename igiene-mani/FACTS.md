@@ -1,0 +1,6 @@
+# Fatti e fonti
+
+- "Fino alla metà (50 %) delle infezioni evitabili legate all'assistenza si prevengono con l'igiene delle mani": OMS, World Hand Hygiene Day 2021, Key facts and figures — "Appropriate hand hygiene prevents up to 50% of avoidable infections acquired during health care delivery". https://who.int/campaigns/world-hand-hygiene-day/2021/key-facts-and-figures
+- I 5 momenti (prima del contatto con il paziente; prima di una manovra pulita/asettica; dopo esposizione a liquidi biologici; dopo il contatto con il paziente; dopo il contatto con l'ambiente circostante il paziente): OMS, *My 5 Moments for Hand Hygiene* / WHO Guidelines on Hand Hygiene in Health Care (2009).
+- Frizione idroalcolica 20–30 s; lavaggio con acqua e sapone 40–60 s; chiudere il rubinetto con la salvietta: OMS, *How to Handrub / How to Handwash* (2009).
+- Acqua e sapone quando le mani sono visibilmente sporche o dopo l'uso del bagno; unghie corte, niente unghie artificiali; i guanti non sostituiscono l'igiene delle mani: WHO Guidelines on Hand Hygiene in Health Care (2009); campagna OMS 2025 "It might be gloves. It's always hand hygiene". https://www.emro.who.int/media/news/world-hand-hygiene-day-2025-it-might-be-gloves-its-always-hand-hygiene.html

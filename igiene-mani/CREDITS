@@ -1,0 +1,11 @@
+Mani pulite, cura sicura — crediti e licenze dei materiali di terze parti
+
+Voce: Kokoro-82M v1.0 (modello ONNX via kokoro-onnx, voce "if_sara"), Apache License 2.0
+      https://github.com/thewh1teagle/kokoro-onnx · https://huggingface.co/hexgrad/Kokoro-82M
+Font: Jost, di Owen Earl (indestructible type*), SIL Open Font License 1.1 (fonts/Jost-OFL.txt)
+      https://github.com/google/fonts/tree/main/ofl/jost
+Musica: partitura originale sintetizzata in codice (marimba, kalimba, glockenspiel, basso, percussioni), nessun campione esterno.
+Effetti sonori: sintetizzati in codice (numpy/scipy), nessun campione esterno.
+Immagini: disegnate interamente in codice (Canvas 2D), nessuna immagine esterna.
+Strumenti: motore grafico e strumenti di render/mix della libreria Lemo-Opuscar (MIT).
+Fatti: vedi FACTS.md (OMS).
