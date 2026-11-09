@@ -1,0 +1,9 @@
+Disfagia: l'acqua che può fare male — crediti e licenze
+
+Contenuti: dispensa "Disfagia: l'acqua che può fare male" a cura di Riccardo Pilocane (FONTE.md), fornita dall'utente.
+Logo e schermata finale: «Una domanda al giorno… toglie il concorso di torno…», dell'utente (ricostruzione vettoriale in ../logo).
+Voce: Kokoro-82M v1.0 (kokoro-onnx, voce "if_sara"), Apache License 2.0.
+Font: Alfa Slab One (JM Solé), Oleo Script (soytutype), Jost (Owen Earl), Oxanium e Arimo (nel logo) — SIL Open Font License 1.1 (fonts/).
+Musica ed effetti sonori: originali, sintetizzati in codice; nessun campione esterno.
+Immagini: disegnate interamente in codice (Canvas 2D); nessuna immagine esterna oltre al logo dell'utente.
+Strumenti: motore Mid-century Cartoon e strumenti di render/mix della libreria Lemo-Opuscar (MIT).
