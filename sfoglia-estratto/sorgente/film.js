@@ -16,11 +16,12 @@ const SHOTS = [
   { page: 13, line: 'L6', cap: ['Ogni risposta spiegata', 'perché è giusta, perché le altre no'], tail: 1.7 },
   { page: 16, line: 'L7', cap: ['180 domande · 180 spiegazioni', '+ simulazione finale'], tail: .5 },
   { page: 16, line: 'L8', cap: ['Il Modulo 1 è gratuito.', 'Il libro completo ti aspetta.'], tail: 1.6 },
-  { page: 16, line: null, cap: ['Segui la pagina o scrivi a', 'unadomandaalgiornotoglie@gmail.com'], dur: 5.6, small: true },
+  { page: 16, line: 'L9', cap: ['10 € fino al 27 novembre', 'poi torna a 15 €'], tail: 1.5, price: true },
+  { page: 16, line: null, cap: ['Acquistalo su Payhip:', 'payhip.com/Unadomandaalgiornotoglieilconcorsoditorno'], dur: 6.8, small: true },
 ];
 const SUB = { L1: 'Prepari il concorso per operatore socio sanitario? Sfoglia con me.', L2: '12 moduli, con lo stesso metodo.', L3: 'Prima la teoria: chiara, e aggiornata al nuovo profilo 2025.',
   L4: 'Con i riquadri da ricordare, e i trabocchetti da evitare.', L5: 'Poi il test: 10 domande, come al concorso.', L6: 'E ogni risposta è spiegata: perché è giusta, e perché le altre no.',
-  L7: 'In tutto: 180 domande, 180 spiegazioni, e una simulazione finale.', L8: 'Il Modulo 1 è gratuito. Il libro completo ti aspetta.' };
+  L7: 'In tutto: 180 domande, 180 spiegazioni, e una simulazione finale.', L8: 'Il Modulo 1 è gratuito. Il libro completo ti aspetta.', L9: 'Fino al 27 novembre costa 10 euro, invece di 15.' };
 const FLIP = .5;
 export let DUR = 40, END = 37, VO = {}; let T0 = [], FL = [], DURS = {};
 export function init(dur) {
@@ -101,6 +102,9 @@ export function render(g, t) {
   // the "free extract" badge on the first shot
   const b = seg(t, 1.0, 1.3) * (1 - seg(t, T0[1] - .3, T0[1]));
   if (b > 0) { g.save(); g.translate(880, 520); g.rotate(.2); g.scale(back(b, 2.2), back(b, 2.2)); g.beginPath(); g.arc(0, 0, 120, 0, 7); g.fillStyle = TEAL; g.fill(); g.fillStyle = '#15171A'; g.textAlign = 'center'; g.font = '700 46px Jost'; g.fillText('GRATIS', 0, -2); g.font = '600 26px Jost'; g.fillText('16 pagine', 0, 36); g.restore(); if (b > .9) note('badge', 'GRATIS 16 pagine', 760, 400, 1000, 640); }
+  const pi = SHOTS.findIndex(s => s.price), pb = seg(t, T0[pi] + .5, T0[pi] + .8);
+  if (pb > 0) { g.save(); g.translate(W / 2, 1000); g.rotate(-.08); g.scale(back(pb, 2.2), back(pb, 2.2)); g.shadowColor = 'rgba(0,0,0,.5)'; g.shadowBlur = 40; g.beginPath(); g.arc(0, 0, 250, 0, 7); g.fillStyle = TEAL; g.fill(); g.shadowColor = 'transparent';
+    g.fillStyle = '#15171A'; g.textAlign = 'center'; g.font = '700 190px Jost'; g.fillText('10 €', 0, 50); g.font = '600 44px Jost'; g.fillText('fino al 27 novembre', 0, 120); g.font = '600 40px Jost'; g.fillText('invece di 15 €', 0, -120); { const wa = g.measureText('invece di 15 €').width, wp = g.measureText('15 €').width; g.fillRect(wa / 2 - wp - 6, -136, wp + 12, 5); } g.restore(); if (pb > .9) note('price', '10 € fino al 27 novembre invece di 15 €', 290, 750, 790, 1250); }
   caption(g, t); logoBand(g);
   const fo = seg(t, END - .4, END); if (fo > 0) { g.globalAlpha = fo; g.drawImage(IMG.fin, 0, 0, W, H); g.globalAlpha = 1; }
 }
@@ -108,7 +112,7 @@ export function texts(g, t) { render(g, t); return TXT; }
 export function events() {
   const E = [], ev = (t, type, o = {}) => E.push({ t: +t.toFixed(3), type, ...o });
   ev(0.05, 'whoosh'); ev(1.0, 'pop'); FL.forEach((f, i) => { ev(f.t, 'flip'); ev(f.t + FLIP, 'chord', { i }); });
-  T0.slice(1).forEach(t => ev(t + .15, 'tick')); ev(END - .4, 'endcard');
+  T0.slice(1).forEach(t => ev(t + .15, 'tick')); ev(T0[SHOTS.findIndex(s => s.price)] + .5, 'pop'); ev(END - .4, 'endcard');
   Object.entries(VO).forEach(([id, t]) => ev(t, 'vo', { id }));
   E.push({ t: 0, type: 'meta', end: END });
   return E.sort((a, b) => a.t - b.t);

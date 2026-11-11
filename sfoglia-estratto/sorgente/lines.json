@@ -1,10 +1,38 @@
 [
-{"id":"L1","text":"Prepari il concorso per operatore socio sanitario? Sfoglia con me."},
-{"id":"L2","text":"Dodici moduli, con lo stesso metodo."},
-{"id":"L3","text":"Prima la teoria: chiara, e aggiornata al nuovo profilo duemilaventicinque."},
-{"id":"L4","text":"Con i riquadri da ricordare, e i trabocchetti da evitare."},
-{"id":"L5","text":"Poi il test: dieci domande, come al concorso."},
-{"id":"L6","text":"E ogni risposta è spiegata: perché è giusta, e perché le altre no."},
-{"id":"L7","text":"In tutto: centottanta domande, centottanta spiegazioni, e una simulazione finale."},
-{"id":"L8","text":"Il modulo uno è gratuito. Il libro completo ti aspetta."}
+{
+"id": "L1",
+"text": "Prepari il concorso per operatore socio sanitario? Sfoglia con me."
+},
+{
+"id": "L2",
+"text": "Dodici moduli, con lo stesso metodo."
+},
+{
+"id": "L3",
+"text": "Prima la teoria: chiara, e aggiornata al nuovo profilo duemilaventicinque."
+},
+{
+"id": "L4",
+"text": "Con i riquadri da ricordare, e i trabocchetti da evitare."
+},
+{
+"id": "L5",
+"text": "Poi il test: dieci domande, come al concorso."
+},
+{
+"id": "L6",
+"text": "E ogni risposta è spiegata: perché è giusta, e perché le altre no."
+},
+{
+"id": "L7",
+"text": "In tutto: centottanta domande, centottanta spiegazioni, e una simulazione finale."
+},
+{
+"id": "L8",
+"text": "Il modulo uno è gratuito. Il libro completo ti aspetta."
+},
+{
+"id": "L9",
+"text": "Fino al ventisette novembre costa dieci euro, invece di quindici."
+}
 ]
