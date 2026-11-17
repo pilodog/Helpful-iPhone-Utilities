@@ -1,39 +1,39 @@
 1
-00:00:00,500 --> 00:00:02,510
+00:00:00,500 --> 00:00:03,390
 Ti cambiano il turno all'ultimo momento?
 
 2
-00:00:04,510 --> 00:00:10,250
+00:00:04,590 --> 00:00:12,960
 Nella sanità pubblica, il contratto dice che i turni del mese vanno fissati entro il giorno 20 del mese prima.
 
 3
-00:00:11,650 --> 00:00:15,180
+00:00:14,360 --> 00:00:19,550
 Quindi il turno non è solo indicativo: è un impegno anche per l'azienda.
 
 4
-00:00:17,280 --> 00:00:23,920
+00:00:21,150 --> 00:00:29,910
 Può cambiare? Sì, ma come eccezione: per un'emergenza vera, con una motivazione, e rispettando i riposi.
 
 5
-00:00:23,920 --> 00:00:27,320
+00:00:29,910 --> 00:00:35,330
 No, se i cambi continui diventano il modo di organizzare il reparto.
 
 6
-00:00:30,020 --> 00:00:35,230
+00:00:36,730 --> 00:00:43,380
 E i riposi restano: 11 ore tra un turno e l'altro, e 35 ore di riposo settimanale.
 
 7
-00:00:37,030 --> 00:00:40,200
+00:00:44,580 --> 00:00:48,510
 Cosa puoi fare? Chiedi la motivazione per iscritto.
 
 8
-00:00:40,200 --> 00:00:43,040
+00:00:48,510 --> 00:00:51,820
 Fotografa il turno pubblicato, e segna ogni cambio.
 
 9
-00:00:43,040 --> 00:00:46,520
-E se succede spesso, parlane con il tuo rappresentante sindacale.
+00:00:51,830 --> 00:00:55,790
+E se succede spesso, contatta le associazioni di categoria.
 
 10
-00:00:48,720 --> 00:00:51,540
+00:00:57,890 --> 00:01:01,590
 A te è mai successo? Scrivilo nei commenti.

@@ -6,26 +6,26 @@ const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), lerp = (a, b, t)
 const eo = t => 1 - Math.pow(1 - clamp(t), 3), back = (t, s = 1.7) => { t = clamp(t) - 1; return 1 + t * t * ((s + 1) * t + s); };
 const REELS = {
   a: [
-    { kind: 'clip', clip: 0, lines: ['A1'], tail: 1.8, draw: hookA },
+    { kind: 'clip', clip: 0, lines: ['A1'], tail: 1.0, draw: hookA },
     { kind: 'card', lines: ['A2'], tail: 1.2, draw: calendar },
-    { kind: 'clip', clip: 1, lines: ['A3'], tail: 1.9, draw: commitment },
-    { kind: 'card', lines: ['A4', 'A5'], tail: 2.5, draw: yesNo },
-    { kind: 'card', lines: ['A6'], tail: 1.6, draw: rests },
-    { kind: 'card', lines: ['A7', 'A8', 'A9'], tail: 2.0, draw: checklist },
-    { kind: 'clip', clip: 2, lines: ['A10'], tail: 1.9, draw: ctaA },
+    { kind: 'clip', clip: 1, lines: ['A3'], tail: 1.4, draw: commitment },
+    { kind: 'card', lines: ['A4', 'A5'], tail: 1.2, draw: yesNo },
+    { kind: 'card', lines: ['A6'], tail: 1.0, draw: rests },
+    { kind: 'card', lines: ['A7', 'A8', 'A9'], tail: 1.9, draw: checklist },
+    { kind: 'clip', clip: 2, lines: ['A10'], tail: 1.4, draw: ctaA },
   ],
   b: [
-    { kind: 'clip', clip: 3, lines: ['B1'], tail: 1.8, draw: hookB },
+    { kind: 'clip', clip: 3, lines: ['B1'], tail: 1.4, draw: hookB },
     { kind: 'card', lines: ['B2'], tail: 1.0, draw: sixHours },
     { kind: 'card', lines: ['B3'], tail: 1.3, draw: thirty },
     { kind: 'card', lines: ['B4', 'B5'], tail: 1.4, draw: detail },
-    { kind: 'clip', clip: 3, lines: ['B6'], tail: 1.9, draw: ctaB },
+    { kind: 'clip', clip: 3, lines: ['B6'], tail: 1.4, draw: ctaB },
   ],
 };
 export const SUB = {
   A1: "Ti cambiano il turno all'ultimo momento?", A2: 'Nella sanità pubblica, il contratto dice che i turni del mese vanno fissati entro il giorno 20 del mese prima.', A3: "Quindi il turno non è solo indicativo: è un impegno anche per l'azienda.",
   A4: "Può cambiare? Sì, ma come eccezione: per un'emergenza vera, con una motivazione, e rispettando i riposi.", A5: 'No, se i cambi continui diventano il modo di organizzare il reparto.', A6: "E i riposi restano: 11 ore tra un turno e l'altro, e 35 ore di riposo settimanale.",
-  A7: 'Cosa puoi fare? Chiedi la motivazione per iscritto.', A8: 'Fotografa il turno pubblicato, e segna ogni cambio.', A9: 'E se succede spesso, parlane con il tuo rappresentante sindacale.', A10: 'A te è mai successo? Scrivilo nei commenti.',
+  A7: 'Cosa puoi fare? Chiedi la motivazione per iscritto.', A8: 'Fotografa il turno pubblicato, e segna ogni cambio.', A9: 'E se succede spesso, contatta le associazioni di categoria.', A10: 'A te è mai successo? Scrivilo nei commenti.',
   B1: 'Lavori più di 6 ore di fila? Ti spetta una pausa.', B2: "Lo prevede la legge sull'orario di lavoro: oltre le 6 ore, una pausa per recuperare.", B3: 'Nella sanità pubblica, per chi lavora a giornata, il contratto parla di almeno 30 minuti.',
   B4: 'Il dettaglio che pochi conoscono: questa regola vale per chi non è in turno.', B5: 'Se fai i turni, controlla cosa prevedono il contratto e gli accordi della tua azienda.', B6: 'Nel tuo reparto, la pausa si riesce a fare davvero? Scrivilo nei commenti.',
 };
@@ -72,37 +72,37 @@ function calendar(g, t, v) {
   for (let i = 0; i < cols * rows; i++) { const a = seg(t, v.A2 + .1 + i * .07, v.A2 + .3 + i * .07); if (a <= 0) continue; const x = x0 + (i % cols) * (cs + gap), y = y0 + Math.floor(i / cols) * (cs + gap), ch = L[i];
     g.save(); g.translate(x + cs / 2, y + cs / 2); g.scale(back(a, 2), back(a, 2)); g.fillStyle = ch === 'N' ? '#0A5E5B' : ch === 'R' ? 'rgba(255,255,255,.12)' : ch === 'S' ? '#7FD9D4' : WHITE; g.beginPath(); g.roundRect(-cs / 2, -cs / 2, cs, cs, 14); g.fill();
     g.font = `700 50px ${F}`; g.fillStyle = ch === 'N' ? WHITE : ch === 'R' ? 'rgba(255,255,255,.4)' : INK; g.fillText(ch, 0, 18); g.restore(); }
-  const p = seg(t, v.A2 + 3.2, v.A2 + 3.6); if (p > 0) { g.save(); g.translate(W / 2, 1180); g.scale(back(p, 2), back(p, 2)); g.font = `700 54px ${F}`; const s = 'fissati entro il giorno 20', w = g.measureText(s).width + 90; g.fillStyle = AMBER; g.beginPath(); g.roundRect(-w / 2, -58, w, 100, 50); g.fill(); g.fillStyle = INK; g.fillText(s, 0, 10); g.restore(); if (p >= 1) note('pill', 'fissati entro il giorno 20', 150, 1120, 930, 1225); }
-  say(g, 'c2', 'del mese prima', t, v.A2 + 3.9, 1250, { px: 60, wt: 600 });
+  const p = seg(t, v.A2 + 5.2, v.A2 + 5.6); if (p > 0) { g.save(); g.translate(W / 2, 1180); g.scale(back(p, 2), back(p, 2)); g.font = `700 54px ${F}`; const s = 'fissati entro il giorno 20', w = g.measureText(s).width + 90; g.fillStyle = AMBER; g.beginPath(); g.roundRect(-w / 2, -58, w, 100, 50); g.fill(); g.fillStyle = INK; g.fillText(s, 0, 10); g.restore(); if (p >= 1) note('pill', 'fissati entro il giorno 20', 150, 1120, 930, 1225); }
+  say(g, 'c2', 'del mese prima', t, v.A2 + 6.6, 1250, { px: 60, wt: 600 });
   cite(g, 'CCNL Comparto Sanità 2022-2024 · art. 27', t, v.A2 + 1.2);
 }
-function commitment(g, t, v) { let y = say(g, 'm1', 'Non è «solo indicativo».', t, v.A3, 1140, { px: 84 }); say(g, 'm2', "È un impegno anche per l'azienda.", t, v.A3 + 1.5, y + 16, { px: 84, color: TEAL }); }
+function commitment(g, t, v) { let y = say(g, 'm1', 'Non è «solo indicativo».', t, v.A3, 1140, { px: 84 }); say(g, 'm2', "È un impegno anche per l'azienda.", t, v.A3 + 2.6, y + 16, { px: 84, color: TEAL }); }
 function yesNo(g, t, v) {
   cardBg(g, 0);
   const panel = (y, h, col, a) => { g.save(); g.globalAlpha = clamp(a * 1.5); g.translate(0, (1 - eo(a)) * 40); g.fillStyle = col; g.beginPath(); g.roundRect(60, y, W - 120, h, 34); g.fill(); g.restore(); };
   const a1 = seg(t, v.A4 + .4, v.A4 + .8); panel(440, 640, 'rgba(10,143,138,.55)', a1);
   if (a1 > 0) { g.save(); g.globalAlpha = clamp(a1 * 1.5); g.textAlign = 'left'; g.font = `700 110px ${F}`; g.fillStyle = WHITE; g.fillText('Sì', 120, 570); g.font = `600 48px ${F}`; g.fillStyle = TEAL; g.fillText('ma come eccezione', 260, 560); g.restore(); if (a1 >= 1) note('si', 'Sì ma come eccezione', 120, 470, 760, 590); }
-  [['emergenza vera', 2.6], ['cambio motivato', 3.9], ['riposi rispettati', 5.0]].forEach(([s, at], k) => { const a = seg(t, v.A4 + at, v.A4 + at + .3); if (a <= 0) return; const y = 700 + k * 120; tick(g, 160, y - 18, 36, a); g.save(); g.globalAlpha = a; g.textAlign = 'left'; g.font = `600 62px ${F}`; g.fillStyle = WHITE; g.fillText(s, 230, y); g.restore(); if (a >= 1) note('y' + k, s, 120, y - 60, 900, y + 20); });
+  [['emergenza vera', 3.6], ['cambio motivato', 5.4], ['riposi rispettati', 6.6]].forEach(([s, at], k) => { const a = seg(t, v.A4 + at, v.A4 + at + .3); if (a <= 0) return; const y = 700 + k * 120; tick(g, 160, y - 18, 36, a); g.save(); g.globalAlpha = a; g.textAlign = 'left'; g.font = `600 62px ${F}`; g.fillStyle = WHITE; g.fillText(s, 230, y); g.restore(); if (a >= 1) note('y' + k, s, 120, y - 60, 900, y + 20); });
   const a2 = seg(t, v.A5, v.A5 + .4); panel(1120, 420, 'rgba(235,87,60,.5)', a2);
-  if (a2 > 0) { g.save(); g.globalAlpha = clamp(a2 * 1.5); g.textAlign = 'left'; g.font = `700 110px ${F}`; g.fillStyle = WHITE; g.fillText('No', 120, 1250); g.restore(); cross(g, 160, 1372, 36, seg(t, v.A5 + .8, v.A5 + 1.1));
-    g.save(); g.globalAlpha = seg(t, v.A5 + .8, v.A5 + 1.1); g.textAlign = 'left'; g.font = `600 56px ${F}`; g.fillStyle = WHITE; wrap(g, 'cambi continui come modo di organizzare il reparto', 720).forEach((l, k) => g.fillText(l, 230, 1390 + k * 66)); g.restore(); if (seg(t, v.A5 + .8, v.A5 + 1.1) >= 1) note('no', 'No cambi continui come modo di organizzare il reparto', 120, 1160, 980, 1500); }
+  if (a2 > 0) { g.save(); g.globalAlpha = clamp(a2 * 1.5); g.textAlign = 'left'; g.font = `700 110px ${F}`; g.fillStyle = WHITE; g.fillText('No', 120, 1250); g.restore(); cross(g, 160, 1372, 36, seg(t, v.A5 + 1.2, v.A5 + 1.5));
+    g.save(); g.globalAlpha = seg(t, v.A5 + 1.2, v.A5 + 1.5); g.textAlign = 'left'; g.font = `600 56px ${F}`; g.fillStyle = WHITE; wrap(g, 'cambi continui come modo di organizzare il reparto', 720).forEach((l, k) => g.fillText(l, 230, 1390 + k * 66)); g.restore(); if (seg(t, v.A5 + 1.2, v.A5 + 1.5) >= 1) note('no', 'No cambi continui come modo di organizzare il reparto', 120, 1160, 980, 1500); }
 }
 function rests(g, t, v) {
   cardBg(g, 1); kicker(g, 'I RIPOSI RESTANO', t, 480);
   const big = (num, lab, at, y) => { const a = seg(t, at, at + .35); if (a <= 0) return; g.save(); g.translate(W / 2, y); g.scale(back(a, 1.8), back(a, 1.8)); g.textAlign = 'center'; g.font = `700 260px ${F}`; g.fillStyle = TEAL; g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 20; g.fillText(num, 0, 0); g.restore(); g.save(); g.globalAlpha = a; g.textAlign = 'center'; g.font = `600 56px ${F}`; g.fillStyle = WHITE; g.fillText(lab, W / 2, y + 80); g.restore(); if (a >= 1) note('n' + num, num + ' ' + lab, 100, y - 220, 980, y + 100); };
-  big('11', "ore tra un turno e l'altro", v.A6 + 1.0, 820); big('35', 'ore di riposo settimanale', v.A6 + 3.0, 1300);
+  big('11', "ore tra un turno e l'altro", v.A6 + 1.6, 820); big('35', 'ore di riposo settimanale', v.A6 + 3.9, 1300);
   cite(g, 'D.Lgs. 66/2003, artt. 7 e 9', t, v.A6 + 1.4);
 }
 function checklist(g, t, v) {
   cardBg(g, 0); kicker(g, 'COSA PUOI FARE', t, 480);
-  [['Chiedi la motivazione per iscritto', v.A7 + 1.0], ['Fotografa il turno pubblicato', v.A8], ['Segna ogni cambio', v.A8 + 1.5], ['Parlane con il rappresentante sindacale', v.A9 + 1.0]].forEach(([s, at], k) => {
+  [['Chiedi la motivazione per iscritto', v.A7 + 1.3], ['Fotografa il turno pubblicato', v.A8], ['Segna ogni cambio', v.A8 + 1.9], ['Contatta le associazioni di categoria', v.A9 + 1.5]].forEach(([s, at], k) => {
     const a = seg(t, at, at + .3); if (a <= 0) return; const y = 600 + k * 250; g.save(); g.globalAlpha = clamp(a * 1.5); g.translate((1 - eo(a)) * 60, 0); g.fillStyle = 'rgba(255,255,255,.08)'; g.beginPath(); g.roundRect(60, y, W - 120, 210, 28); g.fill(); g.strokeStyle = 'rgba(0,213,205,.5)'; g.lineWidth = 3; g.stroke();
     g.textAlign = 'left'; g.font = `600 56px ${F}`; g.fillStyle = WHITE; const L = wrap(g, s, 720); L.forEach((l, j) => g.fillText(l, 230, y + 105 + (j - (L.length - 1) / 2) * 66 + 18)); g.restore(); tick(g, 150, y + 105, 44, seg(t, at + .15, at + .45)); if (a >= 1) note('k' + k, s, 60, y, W - 60, y + 210); });
 }
-function ctaA(g, t, v) { let y = say(g, 'q1', 'A te è mai successo?', t, v.A10, 1160, { px: 96 }); say(g, 'q2', 'Scrivilo nei commenti', t, v.A10 + 1.3, y + 20, { px: 72, color: TEAL }); }
+function ctaA(g, t, v) { let y = say(g, 'q1', 'A te è mai successo?', t, v.A10, 1160, { px: 96 }); say(g, 'q2', 'Scrivilo nei commenti', t, v.A10 + 1.7, y + 20, { px: 72, color: TEAL }); }
 
 // ---------- reel B ----------
-function hookB(g, t, v) { let y = say(g, 'h1', 'Più di 6 ore di fila?', t, v.B1, 1180, { px: 96 }); say(g, 'h2', 'Ti spetta una pausa.', t, v.B1 + 1.5, y + 10, { px: 96, color: TEAL }); }
+function hookB(g, t, v) { let y = say(g, 'h1', 'Più di 6 ore di fila?', t, v.B1, 1180, { px: 96 }); say(g, 'h2', 'Ti spetta una pausa.', t, v.B1 + 1.7, y + 10, { px: 96, color: TEAL }); }
 function sixHours(g, t, v) {
   cardBg(g, 0); kicker(g, 'ORARIO DI LAVORO', t, 520);
   const x0 = 110, x1 = W - 110, y = 900, u = eo(seg(t, v.B2 + .4, v.B2 + 3.6)) * (7.2 / 8), hx = h => lerp(x0, x1, h / 8);
@@ -114,18 +114,18 @@ function sixHours(g, t, v) {
 }
 function thirty(g, t, v) {
   cardBg(g, 1); kicker(g, 'SANITÀ PUBBLICA · A GIORNATA', t, 520);
-  const a = seg(t, v.B3 + 2.6, v.B3 + 3.0); if (a > 0) { g.save(); g.translate(W / 2, 960); g.scale(back(a, 1.8), back(a, 1.8)); g.textAlign = 'center'; g.font = `700 420px ${F}`; g.fillStyle = TEAL; g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 24; g.fillText('30', 0, 0); g.restore(); if (a >= 1) note('30', '30', 250, 640, 830, 980); }
-  say(g, 't2', 'minuti di pausa', t, v.B3 + 3.0, 1040, { px: 84 }); say(g, 't3', 'almeno', t, v.B3 + 2.3, 566, { px: 60, wt: 600, color: SOFT });
+  const a = seg(t, v.B3 + 4.2, v.B3 + 4.6); if (a > 0) { g.save(); g.translate(W / 2, 960); g.scale(back(a, 1.8), back(a, 1.8)); g.textAlign = 'center'; g.font = `700 420px ${F}`; g.fillStyle = TEAL; g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 24; g.fillText('30', 0, 0); g.restore(); if (a >= 1) note('30', '30', 250, 640, 830, 980); }
+  say(g, 't2', 'minuti di pausa', t, v.B3 + 4.6, 1040, { px: 84 }); say(g, 't3', 'almeno', t, v.B3 + 3.8, 566, { px: 60, wt: 600, color: SOFT });
   cite(g, 'CCNL Comparto Sanità 2022-2024 · art. 27, c. 5', t, v.B3 + 1.0);
 }
 function detail(g, t, v) {
   cardBg(g, 0); kicker(g, 'IL DETTAGLIO CHE POCHI CONOSCONO', t, 520, AMBER);
-  let y = say(g, 'd1', 'Vale per chi', t, v.B4 + 1.6, 660, { px: 84, shadow: 0 }); const y2 = say(g, 'd2', 'non è in turno', t, v.B4 + 2.0, y + 20, { px: 96, color: TEAL, shadow: 0 });
-  const c = seg(t, v.B4 + 2.5, v.B4 + 3.1); if (c > 0) { g.save(); g.strokeStyle = TEAL; g.lineWidth = 6; g.beginPath(); g.ellipse(W / 2, y + 86, 400, 92, -.02, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * eo(c)); g.stroke(); g.restore(); }
-  const b = seg(t, v.B5, v.B5 + .35); if (b > 0) { g.save(); g.globalAlpha = clamp(b * 1.5); g.fillStyle = 'rgba(255,255,255,.08)'; g.beginPath(); g.roundRect(60, 1080, W - 120, 360, 30); g.fill(); g.strokeStyle = 'rgba(240,180,60,.7)'; g.lineWidth = 3; g.stroke(); g.restore(); let yy = say(g, 'd3', 'Fai i turni?', t, v.B5, 1120, { px: 76, color: AMBER, shadow: 0 }); say(g, 'd4', 'Controlla contratto e accordi aziendali', t, v.B5 + .9, yy + 10, { px: 62, wt: 600, shadow: 0, max: 860 }); }
+  let y = say(g, 'd1', 'Vale per chi', t, v.B4 + 2.6, 660, { px: 84, shadow: 0 }); const y2 = say(g, 'd2', 'non è in turno', t, v.B4 + 3.3, y + 20, { px: 96, color: TEAL, shadow: 0 });
+  const c = seg(t, v.B4 + 4.0, v.B4 + 4.6); if (c > 0) { g.save(); g.strokeStyle = TEAL; g.lineWidth = 6; g.beginPath(); g.ellipse(W / 2, y + 86, 400, 92, -.02, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * eo(c)); g.stroke(); g.restore(); }
+  const b = seg(t, v.B5, v.B5 + .35); if (b > 0) { g.save(); g.globalAlpha = clamp(b * 1.5); g.fillStyle = 'rgba(255,255,255,.08)'; g.beginPath(); g.roundRect(60, 1080, W - 120, 360, 30); g.fill(); g.strokeStyle = 'rgba(240,180,60,.7)'; g.lineWidth = 3; g.stroke(); g.restore(); let yy = say(g, 'd3', 'Fai i turni?', t, v.B5, 1120, { px: 76, color: AMBER, shadow: 0 }); say(g, 'd4', 'Controlla contratto e accordi aziendali', t, v.B5 + 1.2, yy + 10, { px: 62, wt: 600, shadow: 0, max: 860 }); }
   cite(g, 'CCNL Sanità 2022-2024 · Dichiarazione congiunta n. 2', t, v.B4 + 2.2);
 }
-function ctaB(g, t, v) { let y = say(g, 'q1', 'Nel tuo reparto la pausa si riesce a fare davvero?', t, v.B6, 1080, { px: 84 }); say(g, 'q2', 'Scrivilo nei commenti', t, v.B6 + 2.8, y + 24, { px: 72, color: TEAL }); }
+function ctaB(g, t, v) { let y = say(g, 'q1', 'Nel tuo reparto la pausa si riesce a fare davvero?', t, v.B6, 1080, { px: 84 }); say(g, 'q2', 'Scrivilo nei commenti', t, v.B6 + 3.0, y + 24, { px: 72, color: TEAL }); }
 
 // ---------- frame ----------
 function logo(g) { const lw = 700, lh = Math.round(lw * IMG.logo.height / IMG.logo.width); g.drawImage(IMG.logo, (W - lw) / 2, 110, lw, lh); }

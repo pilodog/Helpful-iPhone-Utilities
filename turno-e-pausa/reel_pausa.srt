@@ -1,23 +1,23 @@
 1
-00:00:00,500 --> 00:00:03,410
+00:00:00,500 --> 00:00:04,100
 Lavori più di 6 ore di fila? Ti spetta una pausa.
 
 2
-00:00:05,410 --> 00:00:10,300
+00:00:05,700 --> 00:00:10,460
 Lo prevede la legge sull'orario di lavoro: oltre le 6 ore, una pausa per recuperare.
 
 3
-00:00:11,500 --> 00:00:16,190
+00:00:11,660 --> 00:00:18,500
 Nella sanità pubblica, per chi lavora a giornata, il contratto parla di almeno 30 minuti.
 
 4
-00:00:17,690 --> 00:00:21,420
+00:00:20,000 --> 00:00:26,250
 Il dettaglio che pochi conoscono: questa regola vale per chi non è in turno.
 
 5
-00:00:21,420 --> 00:00:25,730
+00:00:26,250 --> 00:00:32,340
 Se fai i turni, controlla cosa prevedono il contratto e gli accordi della tua azienda.
 
 6
-00:00:27,330 --> 00:00:31,670
+00:00:33,940 --> 00:00:39,320
 Nel tuo reparto, la pausa si riesce a fare davvero? Scrivilo nei commenti.
